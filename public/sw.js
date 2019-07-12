@@ -2,6 +2,13 @@
 var CACHE_STATIC_NAME = 'static-v4';
 var CACHE_DYNAMIC_NAME = 'dynamic-v2';
 
+
+// ******** The SW is a worker that just responds to events like install/activate/fetch/ etc ********************** */
+
+
+// ******** In the install event we do cache.addAll(which does fetch AND cache) of the homepage and all the assets the homepage needs
+//          so that even if there is no internet the app will at least show the home page and do some minimum stuff
+//          This is called CACHING the APP SHELL 
 self.addEventListener('install', function(event) {
   console.log('[Service Worker] Installing Service Worker ...', event);
   event.waitUntil(
@@ -10,9 +17,9 @@ self.addEventListener('install', function(event) {
         console.log('[Service Worker] Precaching App Shell');
         cache.addAll([
           '/',
-          '/index.html',
-          '/src/js/app.js',
-          '/src/js/feed.js',
+          '/index.html',                                            // Home Page
+          '/src/js/app.js',                                         // From here down are all the assets the home Page has like
+          '/src/js/feed.js',                                        // js/css/images/fonts/etc
           '/src/js/promise.js',
           '/src/js/fetch.js',
           '/src/js/material.min.js',
@@ -27,6 +34,7 @@ self.addEventListener('install', function(event) {
   )
 });
 
+// ***************** Remove the cache that was setup by the old SW that has just been booted out ************* */
 self.addEventListener('activate', function(event) {
   console.log('[Service Worker] Activating Service Worker ....', event);
   event.waitUntil(
@@ -43,6 +51,7 @@ self.addEventListener('activate', function(event) {
   return self.clients.claim();
 });
 
+// ***************** NETWORK PROXY ************************************************************************** */
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
