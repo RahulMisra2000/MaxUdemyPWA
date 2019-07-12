@@ -22,6 +22,7 @@ var STATIC_FILES = [
   'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
 ];
 
+<<<<<<< HEAD
 // function trimCache(cacheName, maxItems) {
 //   caches.open(cacheName)
 //     .then(function (cache) {
@@ -36,17 +37,50 @@ var STATIC_FILES = [
 // }
 
 self.addEventListener('install', function (event) {
+=======
+
+// ******** The SW is a worker that just responds to events like install/activate/fetch/ etc ********************** */
+
+
+// ******** In the install event we do cache.addAll(which does fetch AND cache) of the homepage and all the assets the homepage needs
+//          so that even if there is no internet the app will at least show the home page and do some minimum stuff
+//          This is called CACHING the APP SHELL 
+self.addEventListener('install', function(event) {
+>>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
   console.log('[Service Worker] Installing Service Worker ...', event);
   event.waitUntil(
     caches.open(CACHE_STATIC_NAME)
       .then(function (cache) {
         console.log('[Service Worker] Precaching App Shell');
+<<<<<<< HEAD
         cache.addAll(STATIC_FILES);
+=======
+        cache.addAll([
+          '/',
+          '/index.html',                                            // Home Page
+          '/src/js/app.js',                                         // From here down are all the assets the home Page has like
+          '/src/js/feed.js',                                        // js/css/images/fonts/etc
+          '/src/js/promise.js',
+          '/src/js/fetch.js',
+          '/src/js/material.min.js',
+          '/src/css/app.css',
+          '/src/css/feed.css',
+          '/src/images/main-image.jpg',
+          'https://fonts.googleapis.com/css?family=Roboto:400,700',
+          'https://fonts.googleapis.com/icon?family=Material+Icons',
+          'https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.3.0/material.indigo-pink.min.css'
+        ]);
+>>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
       })
   )
 });
 
+<<<<<<< HEAD
 self.addEventListener('activate', function (event) {
+=======
+// ***************** Remove the cache that was setup by the old SW that has just been booted out ************* */
+self.addEventListener('activate', function(event) {
+>>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
   console.log('[Service Worker] Activating Service Worker ....', event);
   event.waitUntil(
     caches.keys()
@@ -62,6 +96,7 @@ self.addEventListener('activate', function (event) {
   return self.clients.claim();
 });
 
+<<<<<<< HEAD
 function isInArray(string, array) {
   var cachePath;
   if (string.indexOf(self.origin) === 0) { // request targets domain where we serve the page from (i.e. NOT a CDN)
@@ -72,6 +107,25 @@ function isInArray(string, array) {
   }
   return array.indexOf(cachePath) > -1;
 }
+=======
+// ***************** NETWORK PROXY ************************************************************************** */
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        if (response) {
+          return response;
+        } else {
+          return fetch(event.request)
+            .then(function(res) {
+              return caches.open(CACHE_DYNAMIC_NAME)
+                .then(function(cache) {
+                  cache.put(event.request.url, res.clone());
+                  return res;
+                })
+            })
+            .catch(function(err) {
+>>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
 
 self.addEventListener('fetch', function (event) {
 
@@ -277,6 +331,7 @@ self.addEventListener('push', function(event) {
     self.registration.showNotification(data.title, options)
   );
 });
+<<<<<<< HEAD
 
 
 
@@ -298,3 +353,5 @@ self.addEventListener('push', function(event) {
 
 
 
+=======
+>>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
