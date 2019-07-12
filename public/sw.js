@@ -112,10 +112,10 @@ function isInArray(string, array) {
 self.addEventListener('fetch', function(event) {
   event.respondWith(
     caches.match(event.request)
-      .then(function(response) {
-        if (response) {
+      .then(function(response) {      //********* If a match is found then response has the response of the request
+        if (response) {           
           return response;
-        } else {
+        } else {                      //          otherwise the response is null ***************************** /
           return fetch(event.request)
             .then(function(res) {
               return caches.open(CACHE_DYNAMIC_NAME)
