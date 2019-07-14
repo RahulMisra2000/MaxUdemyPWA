@@ -187,21 +187,21 @@ self.addEventListener('fetch', function (event) {
 //     caches.match(event.request)
 //       .then(function(response) {
 //         if (response) {
-//           return response;
+    //           return response;
 //         } else {
 //           return fetch(event.request)
 //             .then(function(res) {
-//               return caches.open(CACHE_DYNAMIC_NAME)
-//                 .then(function(cache) {
-//                   cache.put(event.request.url, res.clone());
-//                   return res;
-//                 })
+    //               return caches.open(CACHE_DYNAMIC_NAME)
+    //                 .then(function(cache) {
+        //                   cache.put(event.request.url, res.clone());
+        //                   return res;
+    //                 })
 //             })
 //             .catch(function(err) {                         // *********   FETCH failed ********************* */
-//               return caches.open(CACHE_STATIC_NAME)
-//                 .then(function(cache) {
-//                   return cache.match('/offline.html');     // *********   return the offline.html as a response */
-//                 });
+    //               return caches.open(CACHE_STATIC_NAME)
+    //                 .then(function(cache) {
+    //                   return cache.match('/offline.html');     // *********   return the offline.html as a response */
+    //                 });
 //             });
 //         }
 //       })
@@ -224,7 +224,7 @@ self.addEventListener('fetch', function (event) {
 //   );
 // });
 
-// Cache-only
+// *********** Cache-only STRATEGY *******************************************************************************************************
 // self.addEventListener('fetch', function (event) {
 //   event.respondWith(
 //     caches.match(event.request)
