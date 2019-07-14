@@ -114,15 +114,15 @@ self.addEventListener('fetch', function(event) {
     caches.match(event.request)
       .then(function(response) {      //********* If a match is found then response has the response of the request
         if (response) {           
-          return response;
+             return response;
         } else {                      //          otherwise the response is null ***************************** /
           return fetch(event.request)
             .then(function(res) {
-              return caches.open(CACHE_DYNAMIC_NAME)
-                .then(function(cache) {
-                  cache.put(event.request.url, res.clone());
-                  return res;
-                })
+                  return caches.open(CACHE_DYNAMIC_NAME)
+                    .then(function(cache) {
+                      cache.put(event.request.url, res.clone()); /* *** clone() so that the res can be used later */
+                      return res;                                /*     this res will be returned to the code tha did the fetch */
+                    })
             })
             .catch(function(err) {
 >>>>>>> fc78a00c5d90e9ffdfb370ae10b94e3f7fc3d877
@@ -195,10 +195,10 @@ self.addEventListener('fetch', function (event) {
 //                   return res;
 //                 })
 //             })
-//             .catch(function(err) {
+//             .catch(function(err) {                         // *********   FETCH failed ********************* */
 //               return caches.open(CACHE_STATIC_NAME)
 //                 .then(function(cache) {
-//                   return cache.match('/offline.html');
+//                   return cache.match('/offline.html');     // *********   return the offline.html as a response */
 //                 });
 //             });
 //         }
