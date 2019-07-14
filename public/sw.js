@@ -57,7 +57,7 @@ self.addEventListener('install', function(event) {
 =======
         cache.addAll([
           '/',
-          '/index.html',                                            // Home Page
+          '/index.html',                                            // ************* Home Page
           '/src/js/app.js',                                         // From here down are all the assets the home Page has like
           '/src/js/feed.js',                                        // js/css/images/fonts/etc
           '/src/js/promise.js',
@@ -84,11 +84,11 @@ self.addEventListener('activate', function(event) {
   console.log('[Service Worker] Activating Service Worker ....', event);
   event.waitUntil(
     caches.keys()
-      .then(function (keyList) {
+      .then(function (keyList) {                        // ******** a list of all the cache names ******************* */
         return Promise.all(keyList.map(function (key) {
           if (key !== CACHE_STATIC_NAME && key !== CACHE_DYNAMIC_NAME) {
             console.log('[Service Worker] Removing old cache.', key);
-            return caches.delete(key);
+            return caches.delete(key);                  // ******** deletes all entries under the cache name ******* */
           }
         }));
       })
