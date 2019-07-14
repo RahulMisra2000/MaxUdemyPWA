@@ -120,7 +120,9 @@ self.addEventListener('fetch', function(event) {
             .then(function(res) {
                   return caches.open(CACHE_DYNAMIC_NAME)
                     .then(function(cache) {
-                      cache.put(event.request.url, res.clone()); /* *** clone() so that the res can be used later */
+                      // put the request/response in the cache and then let the response pass through ***********************
+                      cache.put(event.request.url, res.clone()); / *********** DYNAMIC CACHING ***************************** */
+                                                                 /* *** clone() so that the res can be used later */
                       return res;                                /*     this res will be returned to the code tha did the fetch */
                     })
             })
