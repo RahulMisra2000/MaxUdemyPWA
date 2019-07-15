@@ -192,7 +192,7 @@ function createCard(data) {
   // cardSaveButton.addEventListener('click', onSaveButtonClicked);
   // cardSupportingText.appendChild(cardSaveButton);
   cardWrapper.appendChild(cardSupportingText);
-  componentHandler.upgradeElement(cardWrapper);
+  componentHandler.upgradeElement(cardWrapper);     // This is a material design call ****************************************
   sharedMomentsArea.appendChild(cardWrapper);
 }
 
