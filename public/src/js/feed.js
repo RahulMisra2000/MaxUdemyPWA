@@ -162,11 +162,13 @@ function onSaveButtonClicked(event) {
   }
 }
 
+// ************** HOW TO DELETE ALL CHILDREN OF A NODE *************************************************** */
 function clearCards() {
   while (sharedMomentsArea.hasChildNodes()) {
     sharedMomentsArea.removeChild(sharedMomentsArea.lastChild);
   }
 }
+// ************** HOW TO DELETE ALL CHILDREN OF A NODE *************************************************** */
 
 function createCard(data) {
   var cardWrapper = document.createElement('div');
